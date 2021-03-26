@@ -63,7 +63,7 @@ def addChampion(build, champion):
 
 def setLevelChampion(build, level):
   build["champion"]["level"] = level
-
+  
 #-----Gestion Stats--------------------
 
 def statFormula(base, growth, level):
