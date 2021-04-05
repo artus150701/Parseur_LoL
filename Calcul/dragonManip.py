@@ -51,12 +51,13 @@ def removeDragon():
 def dragonUpdate():
   if checkForUpdate():
     print("Début de la mise à jour")
-    
-    removeDragon()
+        
+    if getDragonName() != "":
+      removeDragon()
     
     newestDragonEUW = getLastPatchDragonName()
     url = 'https://ddragon.leagueoflegends.com/cdn/' + newestDragonEUW + ".tgz"
-    pathNewDragonTGZ = os.path.join(os.getcwd(), newestDragonEUW, ".tgz")
+    pathNewDragonTGZ = os.path.join(os.getcwd(), newestDragonEUW + ".tgz")
 
     print("Debut du téléchargement...")
     with open(pathNewDragonTGZ, 'wb') as f:

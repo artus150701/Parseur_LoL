@@ -72,6 +72,7 @@ class Window(QMainWindow):
 
 
 if __name__ == "__main__":
+  Calcul.dragonManip.dragonUpdate()
   build = {
       "champion": {
           "Aatrox": {
@@ -128,7 +129,7 @@ if __name__ == "__main__":
 
   app = QApplication(sys.argv)
 
-  Calcul.dragonManip.dragonUpdate()
+
   window = Window()
 
   
