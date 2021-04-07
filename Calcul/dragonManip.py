@@ -30,10 +30,7 @@ def getLastPatchDragonName():
 
 def checkForUpdate():
   localDragon = getDragonName()
-  with urllib.request.urlopen("https://ddragon.leagueoflegends.com/realms/euw.json") as response:
-      source = response.read()
-      data = json.loads(source)
-  newestDragonEUW = "dragontail-" + data['v']
+  newestDragonEUW = getLastPatchDragonName()
 
   if(localDragon == newestDragonEUW):
     return False
