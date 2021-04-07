@@ -1,4 +1,4 @@
-from .parseurDragonJson import dataItem
+from .fromDragon import getOneItemData
 from .subModule.utileProg import doubleIterate, removesuffix
 from .subModule.tradStats import tradStatChamp, tradStatItem
 
@@ -33,6 +33,9 @@ def createBuild():
   return build
 
 #-----------Gestion des items---------------
+
+
+
 def removeItem(build, item):
   if build["items"].has_key(item):
     del build["items"][item]
@@ -42,13 +45,15 @@ def removeItem(build, item):
 
 def addItem(build, item):
   if len(build["items"]) < 7:
-    data = dataItem(item)
+    data = getOneItemData(item)
     if data:
       build["items"][item] = data
       return True, 0
     else:
+      #Item introuvable -> (False, 1)
       return False, 1
   else:
+    #il y a déjà 6 items dans le build -> (False, 2)
     return False, 2 
 
 #-----Gestion Champion---------------------
@@ -101,8 +106,7 @@ def calculTotalStats(build):
     itemStats = itemSet[selectItem]["stats"]
     for selectStat in itemStats:
       if selectStat.startswith('Flat'):
-        statsTotal[tradStatItem(removesuffix(
-            selectStat.lstrip("Flat"), "Mod"))] += itemStats[selectStat]
+        statsTotal[tradStatItem(removesuffix(selectStat.lstrip("Flat"), "Mod"))] += itemStats[selectStat]
       elif "AttackSpeed" in selectStat:
         statsTotal["AS"]["Bonus"] += itemStats[selectStat]
       else:

@@ -19,9 +19,6 @@ class Window(QMainWindow):
     self.height = 720
     self.iconName = "iconTTool.png"
 
-    self.InitWindow()
-
-  def InitWindow(self):
     self.setWindowIcon(QtGui.QIcon(self.iconName))
     self.setWindowTitle(self.title)
     self.setFixedSize(self.width, self.height)
@@ -42,8 +39,8 @@ class Window(QMainWindow):
     self.generalLayout.addWidget(self.button)
     self.button.clicked.connect(lambda: self.showStats())
 
-
     self.mainWindow.setLayout(self.generalLayout)
+
 
   def showStats(self):
     if self.msg.text():
@@ -132,6 +129,4 @@ if __name__ == "__main__":
 
   window = Window()
 
-  
-  
   sys.exit(app.exec_())

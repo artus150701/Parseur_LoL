@@ -18,6 +18,3 @@ def doubleIterate(iterable):
     yield item, None
 
 
-
-
-
