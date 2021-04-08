@@ -45,6 +45,9 @@ def getOneItemData(itemName):
 
   return False
 
+def getOneChampData():
+  pass
+
 
 def getLisItemId():
   itemsData = getItemsData()
@@ -54,7 +57,6 @@ def getLisItemId():
     listItemId.append(id)
   return listItemId
 
-
 def getListChampionId():
   championData = getChampionData()
 
@@ -63,4 +65,11 @@ def getListChampionId():
     listChampionId.append(id)
   return listChampionId
 
+def getIconChampPath(idChamp):
+  dragonPath = dragonManip.getDragonPath()
+  return os.path.join(dragonPath,"img","champion","tiles",idChamp + "_0.jpg")
 
+def getIconItemPath(idItem):
+  dragonPath = dragonManip.getDragonPath()
+  dragonName = dragonManip.getDragonName()
+  return os.path.join(dragonPath, dragonName[11:], "img", "item", idItem + ".png")

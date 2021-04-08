@@ -1,4 +1,4 @@
-from .fromDragon import getOneItemData
+from .getDragon import getOneItemData
 from .subModule.utileProg import doubleIterate, removesuffix
 from .subModule.tradStats import tradStatChamp, tradStatItem
 

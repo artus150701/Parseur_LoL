@@ -7,13 +7,17 @@ from PyQt5 import QtCore
 import sys 
 
 import Calcul.dragonManip as dragon
+import Calcul.buildManip as build
+import Calcul.getDragon as getDragon
+
+
 
 class Window(QMainWindow):
   def __init__(self):
     super().__init__()
     self.title = "LOL_TheoryCrafting_Tool"
-    self.width = 1280
-    self.height = 720
+    self.width = 1600
+    self.height = 900
     self.iconName = "iconTTool.png"
 
     self.setWindowIcon(QtGui.QIcon(self.iconName))
@@ -33,73 +37,93 @@ class Window(QMainWindow):
     gridChampion = QGridLayout()
     gridChampion.setSpacing(1)
 
-
     gridItem = QGridLayout()
     gridItem.setSpacing(1)
 
     gridStat = QGridLayout()
-    gridStat.setSpacing(10)
+    gridStat.setSpacing(1)
     
     
-
-    championBox= QGroupBox("Champions")
+    championBox = QGroupBox("Champions")
     itemsBox = QGroupBox("items")
     statBox = QGroupBox("Statistiques")
     
     # ================================PARSEUR BOUTON A METTRE ICI=================================================
 
-    nbButton = 155
-    nbColonnes = 4
-    compteur = 0
-    championList = []
-    itemList = []
-    #Création d'une série de bouton stocké dans une liste
-    for i in range(nbButton):
-      championList.append(QPushButton(f"Champion {i}"))
-      itemList.append(QPushButton(f"Items {i}"))
+    championIdList = getDragon.getListChampionId()
+    championButtonList = []
 
-    # =================================================================================
+    for champId in championIdList:
+      iconChampPath = getDragon.getIconChampPath(champId)
+      championButtonList.append(QPushButton(""))
+      championButtonList[-1].setIcon(QtGui.QIcon(iconChampPath))
+      championButtonList[-1].setFixedSize(110,110)
+      championButtonList[-1].setIconSize(QtCore.QSize(100,100))
+
+
+    itemIdList = getDragon.getLisItemId()
+    itemButtonList = []
+
+    for itemId in itemIdList:
+      iconItemPath = getDragon.getIconItemPath(itemId)
+      itemButtonList.append(QPushButton(""))
+      itemButtonList[-1].setIcon(QtGui.QIcon(iconItemPath))
+      itemButtonList[-1].setFixedSize(75,75)
+      itemButtonList[-1].setIconSize(QtCore.QSize(100,100))
+
+
+    # =====================================================================================================
+    
+    #PARAMETRE BOXES
+    nbColonnesChamp = 4
+    nbColonnesItems = 6
+    compteur = 0
+
     # -(- numerateur // denominateur) petit trick pour avoir une division entière arrondie au nombre supérieur
     # ça évite d'importer "math.ceil()" + c'est + rapid
     #Comme ça on a le nombre de ligne nécessaire pour mettre tout les boutons
 
     #définition de la grille de champions
-    for i in range( -(-nbButton//nbColonnes)): 
-      for j in range(nbColonnes):
-        gridChampion.addWidget(championList[compteur], i, j) # j colonnes | i lignes
+    for i in range( -(- len(championButtonList) // nbColonnesChamp)): 
+      for j in range(nbColonnesChamp):
+        gridChampion.addWidget(championButtonList[compteur], i, j) #  i lignes | j colonnes
         compteur += 1
-        if compteur == nbButton: #On s'arrête une fois la liste de bouton complètement parcouru
+        if compteur == len(championButtonList): #On s'arrête une fois la liste de bouton complètement parcouru
           break
     
     #définition de la grille d'items
     compteur = 0
-    for i in range( -(-nbButton//nbColonnes)): 
-      for j in range(nbColonnes):
-        gridItem.addWidget(itemList[compteur], i, j) # j colonnes | i lignes
+    for i in range( -(- len(itemButtonList)//nbColonnesItems)): 
+      for j in range(nbColonnesItems):
+        gridItem.addWidget(itemButtonList[compteur], i, j) # j colonnes | i lignes
         compteur += 1
-        if compteur == nbButton: #On s'arrête une fois la liste de bouton complètement parcouru
+        if compteur == len(itemButtonList): #On s'arrête une fois la liste de bouton complètement parcouru
           break
     
     #définition de la grille des stats
     statLabel =  QLabel("ici on mettra les stas\n avec les icons tout ça tout ça")
     gridStat.addWidget(statLabel)
     
-    statBox.setLayout(gridStat)
+
 
 
     championBox.setLayout(gridChampion)
     championScroll = QScrollArea()
     championScroll.setWidget(championBox)
     championScroll.setWidgetResizable(True)
-    championScroll.setFixedHeight(400)
+    championScroll.setFixedHeight(600)
 
     itemsBox.setLayout(gridItem)
     itemScroll = QScrollArea()
     itemScroll.setWidget(itemsBox)
     itemScroll.setWidgetResizable(True)
-    itemScroll.setFixedHeight(400)
+    itemScroll.setFixedHeight(600)
+
+    statBox.setLayout(gridStat)
 
 
+
+  
     finalLayout = QHBoxLayout()
     finalLayout.addWidget(championScroll)
     finalLayout.addWidget(itemScroll)
