@@ -36,15 +36,17 @@ def getChampionData():
 # ============= recuperation precise de donnee depuis les dicos de json
 
 #Cette fonction marche qu'avec le nom de l'item en argument
-def getOneItemData(itemName):
+def getOneItemData(itemId):
   dataItems = getItemsData()
-
+  return dataItems["data"][itemId]
+  """
   for x in dataItems["data"]:
     if(itemName == dataItems["data"][x]["name"]):
       return dataItems["data"][x]
 
   return False
-
+  """
+  
 def getOneChampData():
   pass
 

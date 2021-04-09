@@ -1,8 +1,15 @@
-import Calcul.fromDragon as parseurDragon
 import pprint
 
-listItem = parseurDragon.lisItem()
 
-pprint.pprint(listItem)
 
-print("nombre d'items dans le jeu = ",len(listItem))
+
+dico = {
+  "caca" : 1234564879
+
+}
+
+pprint.pprint(dico)
+
+dico["caca"] = { "prout": 132,
+"pipi": 1654 }
+pprint.pprint(dico)

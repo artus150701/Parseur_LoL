@@ -34,8 +34,6 @@ def createBuild():
 
 #-----------Gestion des items---------------
 
-
-
 def removeItem(build, item):
   if build["items"].has_key(item):
     del build["items"][item]
