@@ -1,6 +1,6 @@
 import json
 import os
-from test2 import getDragonName
+from Calcul.dragonManip import getDragonName
 
 def getChamp(pathDragon, build, dictChamp):
   dataChamps = {}
