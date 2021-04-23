@@ -115,7 +115,7 @@ class Window(QMainWindow):
       championButtonList[-1].setIcon(QtGui.QIcon(iconChampPath))
       championButtonList[-1].setFixedSize(110,110)
       championButtonList[-1].setIconSize(QtCore.QSize(100,100))
-      championButtonList[-1].clicked.connect(functools.partial(self.champClicked,champId ))
+      self.connectButtonChamp(championButtonList[-1], champId)
 
     itemIdList = getDragon.getLisItemId()
     itemButtonList = []
@@ -126,7 +126,8 @@ class Window(QMainWindow):
       itemButtonList[-1].setIcon(QtGui.QIcon(iconItemPath))
       itemButtonList[-1].setFixedSize(75,75)
       itemButtonList[-1].setIconSize(QtCore.QSize(100,100))
-      itemButtonList[-1].clicked.connect(functools.partial(self.itemClicked, itemId ))
+      self.connectButtonItem(itemButtonList[-1], itemId)
+      
 
 
     # =====================================================================================================
@@ -177,14 +178,16 @@ class Window(QMainWindow):
     statBox.setLayout(gridStat)
 
 
-    finalLayout = QHBoxLayout()
-    finalLayout.addWidget(championScroll)
-    finalLayout.addWidget(itemScroll)
-    finalLayout.addWidget(statBox)
+    finalLayout = QGridLayout()
+    finalLayout.addWidget(championScroll, 2, 1)
+    finalLayout.addWidget(itemScroll, 2, 2)
+    finalLayout.addWidget(statBox, 2, 3 )
 
 
     self.mainWindow.setLayout(finalLayout)
   
+
+  #CONTROLEUR
   def champClicked(self, champId):
     build.addChampion(self.build, champId)
     build.calculTotalStats(self.build)
@@ -194,6 +197,12 @@ class Window(QMainWindow):
       print("YO T AS TROP D ITEM LA ")
     build.calculTotalStats(self.build)
     pprint.pprint(self.build)
+
+  def connectButtonChamp(self, button, champId):
+    button.clicked.connect(functools.partial(self.champClicked, champId ))
+
+  def connectButtonItem(self, button, itemId):
+    button.clicked.connect(functools.partial(self.itemClicked, itemId ))
 
 
 
