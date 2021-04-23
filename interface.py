@@ -22,7 +22,8 @@ class interface(QMainWindow):
     self.width = 1600
     self.height = 900
     self.build = build.createBuild()
-    
+
+    #TEMPORAIRE CEST DE LA TRICHE OULALALALLAL
     self.build = {
       "champion": {
           "Aatrox": {
@@ -74,8 +75,6 @@ class interface(QMainWindow):
           "LifeSteal": 0
       },
   }
-    """
-    #TEMPORAIRE CEST DE LA TRICHE OULALALALLAL
     build.addItem(self.build, "1037")
     build.addItem(self.build, "1001")
     build.addItem(self.build, "6333")
@@ -84,7 +83,7 @@ class interface(QMainWindow):
     build.addItem(self.build, "3036")
     pprint(self.build)
     #FIN DE LA TRICHE OULOULUOULUOULUO
-    """
+    
 
     #Paramètres
     self.setWindowIcon(QtGui.QIcon("iconTTool.png"))

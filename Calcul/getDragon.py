@@ -84,9 +84,9 @@ def getListChampionId():
     listChampionId.append(id)
   return listChampionId
 
-def getIconChampPath(idChamp):
+def getIconChampPath(champId):
   dragonPath = dragonManip.getDragonPath()
-  return os.path.join(dragonPath,"img","champion","tiles",idChamp + "_0.jpg")
+  return os.path.join(dragonPath,"img","champion","tiles",champId + "_0.jpg")
 
 def getIconItemPath(idItem):
   dragonPath = dragonManip.getDragonPath()
