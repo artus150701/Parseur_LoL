@@ -88,7 +88,6 @@ class Window(QMainWindow):
     self.show()
   
 
-
   def UiComponents(self):
 
     gridChampion = QGridLayout()
@@ -201,5 +200,6 @@ class Window(QMainWindow):
 
 if __name__ == "__main__":
   app = QApplication(sys.argv)
+  dragon.dragonUpdate()
   window = Window()  
   sys.exit(app.exec_())
