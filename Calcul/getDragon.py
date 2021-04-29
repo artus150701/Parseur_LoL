@@ -21,8 +21,25 @@ def getItemsData():
   pathItem = os.path.join(dragonPath, dragonName[11:], "data", "fr_FR", "item.json")
   with open(pathItem, "r") as itemsFile:
     itemsJson = itemsFile.read()
+  itemData = json.loads(itemsJson)
+
+  #Suppression des objets non achetable
+  del itemData["data"]["3364"] #trinket rouge
+  del itemData["data"]["3363"] #trinket bleue
+  del itemData["data"]["3340"] #trinket jaune
+  del itemData["data"]["3330"] #fiddle lanterne
+  del itemData["data"]["3599"] #kalista
+  del itemData["data"]["3600"] #kalista
+  del itemData["data"]["3513"] #herald
+  del itemData["data"]["3400"] #gp serpent
+  del itemData["data"]["2052"] #poro biscuit
+  del itemData["data"]["2010"] #cookies
+  del itemData["data"]["2419"] #chronometre rune
+  del itemData["data"]["2421"] #chrono cassé
+  del itemData["data"]["2424"] #autre chrono cassé
+  del itemData["data"]["2423"] #chrono parfait
   
-  return  json.loads(itemsJson)
+  return  itemData
 
 def getChampionData():
   dragonPath = dragonManip.getDragonPath()
@@ -36,15 +53,17 @@ def getChampionData():
 # ============= recuperation precise de donnee depuis les dicos de json
 
 #Cette fonction marche qu'avec le nom de l'item en argument
-def getOneItemData(itemName):
+def getOneItemData(itemId):
   dataItems = getItemsData()
-
+  return dataItems["data"][itemId]
+  """
   for x in dataItems["data"]:
     if(itemName == dataItems["data"][x]["name"]):
       return dataItems["data"][x]
 
   return False
-
+  """
+  
 def getOneChampData():
   pass
 
@@ -65,9 +84,9 @@ def getListChampionId():
     listChampionId.append(id)
   return listChampionId
 
-def getIconChampPath(idChamp):
+def getIconChampPath(champId):
   dragonPath = dragonManip.getDragonPath()
-  return os.path.join(dragonPath,"img","champion","tiles",idChamp + "_0.jpg")
+  return os.path.join(dragonPath,"img","champion","tiles",champId + "_0.jpg")
 
 def getIconItemPath(idItem):
   dragonPath = dragonManip.getDragonPath()

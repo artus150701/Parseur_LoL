@@ -6,6 +6,7 @@ from PyQt5.QtCore import QRect
 from PyQt5 import QtCore
 import sys 
 
+import functools
 
 #Calcul package import
 import Calcul.buildManip
@@ -40,6 +41,7 @@ class Window(QMainWindow):
     self.button.clicked.connect(lambda: self.showStats())
 
     self.mainWindow.setLayout(self.generalLayout)
+
 
 
   def showStats(self):

@@ -34,8 +34,6 @@ def createBuild():
 
 #-----------Gestion des items---------------
 
-
-
 def removeItem(build, item):
   if build["items"].has_key(item):
     del build["items"][item]
@@ -62,14 +60,20 @@ def removeChampion(build):
     if key != "level":
       del build["champion"][key]
 
-
 def addChampion(build, champion):
   pass
 
 def setLevelChampion(build, level):
   build["champion"]["level"] = level
-  
+
+def getChampName(build):
+  for key in build["champion"].keys():
+    if key != "level":
+      return key
+  return ""
+
 #-----Gestion Stats--------------------
+
 
 def statFormula(base, growth, level):
   return base + growth * (level - 1) * (0.7025 + 0.0175 * (level - 1))

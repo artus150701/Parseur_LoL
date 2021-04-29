@@ -10,7 +10,9 @@ import Calcul.dragonManip as dragon
 import Calcul.buildManip as build
 import Calcul.getDragon as getDragon
 
+import functools
 
+import pprint
 
 class Window(QMainWindow):
   def __init__(self):
@@ -19,6 +21,59 @@ class Window(QMainWindow):
     self.width = 1600
     self.height = 900
     self.iconName = "iconTTool.png"
+    self.build = build.createBuild()
+    self.build = {
+      "champion": {
+          "Aatrox": {
+              "name": "Aatrox",
+              "stats": {
+                      "hp": 580,
+                      "hpperlevel": 90,
+                      "mp": 0,
+                      "mpperlevel": 0,
+                      "movespeed": 345,
+                      "armor": 38,
+                      "armorperlevel": 3.25,
+                      "spellblock": 32,
+                      "spellblockperlevel": 1.25,
+                      "attackrange": 175,
+                      "hpregen": 3,
+                      "hpregenperlevel": 1,
+                      "mpregen": 0,
+                      "mpregenperlevel": 0,
+                      "crit": 0,
+                      "critperlevel": 0,
+                      "attackdamage": 60,
+                      "attackdamageperlevel": 5,
+                      "attackspeedperlevel": 2.5,
+                      "attackspeed": 0.651
+              },
+          },
+          "level": 18,
+      },
+      "items": {},
+
+      "statsTotal": {
+          "HP": 0,
+          "Mana": 0,
+          "Vitesse de deplacement": 0,
+          "Armure": 0,
+          "Resistance magique": 0,
+          "Range": 0,
+          "Regen de vie": 0,
+          "Regen de mana": 0,
+          "Crit chance": 0,
+          "AD": 0,
+          "AS": {
+              "Ratio": 0,
+              "Bonus": 0,
+              "Total": 0
+          },
+          "AP": 0,
+          "LifeSteal": 0
+      },
+  }
+    build.setLevelChampion(self.build, 18)
 
     self.setWindowIcon(QtGui.QIcon(self.iconName))
     self.setWindowTitle(self.title)
@@ -32,6 +87,7 @@ class Window(QMainWindow):
 
     self.show()
   
+
   def UiComponents(self):
 
     gridChampion = QGridLayout()
@@ -59,7 +115,7 @@ class Window(QMainWindow):
       championButtonList[-1].setIcon(QtGui.QIcon(iconChampPath))
       championButtonList[-1].setFixedSize(110,110)
       championButtonList[-1].setIconSize(QtCore.QSize(100,100))
-
+      self.connectButtonChamp(championButtonList[-1], champId)
 
     itemIdList = getDragon.getLisItemId()
     itemButtonList = []
@@ -70,6 +126,8 @@ class Window(QMainWindow):
       itemButtonList[-1].setIcon(QtGui.QIcon(iconItemPath))
       itemButtonList[-1].setFixedSize(75,75)
       itemButtonList[-1].setIconSize(QtCore.QSize(100,100))
+      self.connectButtonItem(itemButtonList[-1], itemId)
+      
 
 
     # =====================================================================================================
@@ -105,8 +163,6 @@ class Window(QMainWindow):
     gridStat.addWidget(statLabel)
     
 
-
-
     championBox.setLayout(gridChampion)
     championScroll = QScrollArea()
     championScroll.setWidget(championBox)
@@ -122,19 +178,37 @@ class Window(QMainWindow):
     statBox.setLayout(gridStat)
 
 
-
-  
-    finalLayout = QHBoxLayout()
-    finalLayout.addWidget(championScroll)
-    finalLayout.addWidget(itemScroll)
-    finalLayout.addWidget(statBox)
+    finalLayout = QGridLayout()
+    finalLayout.addWidget(championScroll, 2, 1)
+    finalLayout.addWidget(itemScroll, 2, 2)
+    finalLayout.addWidget(statBox, 2, 3 )
 
 
     self.mainWindow.setLayout(finalLayout)
+  
+
+  #CONTROLEUR
+  def champClicked(self, champId):
+    build.addChampion(self.build, champId)
+    build.calculTotalStats(self.build)
+  
+  def itemClicked(self, itemId):
+    if not(build.addItem(self.build, itemId)):
+      print("YO T AS TROP D ITEM LA ")
+    build.calculTotalStats(self.build)
+    pprint.pprint(self.build)
+
+  def connectButtonChamp(self, button, champId):
+    button.clicked.connect(functools.partial(self.champClicked, champId ))
+
+  def connectButtonItem(self, button, itemId):
+    button.clicked.connect(functools.partial(self.itemClicked, itemId ))
+
 
 
 
 if __name__ == "__main__":
   app = QApplication(sys.argv)
+  dragon.dragonUpdate()
   window = Window()  
   sys.exit(app.exec_())
