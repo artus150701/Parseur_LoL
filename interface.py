@@ -11,7 +11,7 @@ import Calcul.buildManip as build
 import Calcul.getDragon as getDragon
 
 
-class interface(QMainWindow):
+class IU(QMainWindow):
   """Interface du TheoryCrafting Tool"""
   
   def __init__(self):
@@ -86,7 +86,7 @@ class interface(QMainWindow):
     
 
     #Paramètres
-    self.setWindowIcon(QtGui.QIcon("iconTTool.png"))
+    self.setWindowIcon(QtGui.QIcon("iconTCTool.png"))
     self.setWindowTitle(self.title)
     self.setFixedSize(self.width, self.height)
     #Met en place le principale widget et le layout générale
@@ -101,7 +101,7 @@ class interface(QMainWindow):
     self.generalLayout.addWidget(self.champLevelMenu(), 1, 1)
 
     self.mainWidget.setLayout(self.generalLayout)
-    self.show()
+    #self.show()
   
 
 #============================FONCTION CREATION BIG WIDGET=========================================
@@ -264,7 +264,6 @@ class interface(QMainWindow):
   def updateChampBuildIcon(self):
     champId = build.getChampName(self.build)
     if champId != "":
-      print("L ID DU CHAMP OULALALALALL",champId)
       iconChampPath = getDragon.getIconChampPath(champId)
       pixmap = QtGui.QPixmap(iconChampPath).scaled(200,200)
       self.champBuildIcon.setPixmap(pixmap)
@@ -273,5 +272,6 @@ class interface(QMainWindow):
 
 if __name__ == "__main__":
   app = QApplication(sys.argv)
-  window = interface()  
+  window = IU() 
+  window.show() 
   sys.exit(app.exec_())
