@@ -20,14 +20,14 @@ import pprint
 #Elles sont sensé appellée d'autre fonctions de modules en réaction à des entrées d'utilisateur
 
 
-class TCToolControl: #Theory Crafting Tool Control
+class TCToolControl(interface.IU): #Theory Crafting Tool Control
   "Controleur reliant l'interface utilisateur aux fonctions de calcules"
 
-  def __init__(self, IU):
-        """Controller initializer."""
-        self.IU = IU
-        # Connect signals and slots
-        self.connectSignals()
+  def __init__(self):
+    super().__init__()
+    
+    # Connect signals and slots
+    self.connectSignals()
   
   def connectSignals(self):
     #Connect Main Menu
@@ -35,15 +35,15 @@ class TCToolControl: #Theory Crafting Tool Control
     #NADA
     
     #Connect ChampSelectMenu
-    for champButton in self.IU.champButtonList:
+    for champButton in self.champButtonList:
       self.connectButton(button=champButton[0], itemId=champButton[1], function=self.champClicked)
     
     #Connect itemSelectMenu
-    for itemButton in self.IU.itemButtonList:
+    for itemButton in self.itemButtonList:
       self.connectButton(button=itemButton[0], itemId=itemButton[1], function=self.itemClicked)
     
     #Connect itemDeleteButton
-    for itemDeleteButton in self.IU.itemDeleteButtonList:
+    for itemDeleteButton in self.itemDeleteButtonList:
       self.connectButton(button=itemDeleteButton[0], itemId=itemDeleteButton[1], function=self.itemDeleteClicked)
     
     #Connect champLevelMenu
@@ -54,15 +54,15 @@ class TCToolControl: #Theory Crafting Tool Control
     pass
   
   def champClicked(self, champId):
-    buildManip.addChampion(self.IU.build, champId)
-    buildManip.calculTotalStats(self.IU.build)
+    buildManip.addChampion(self.build, champId)
+    buildManip.calculTotalStats(self.build)
     
   
   def itemClicked(self, itemId):
     if not(buildManip.addItem(self.build, itemId)):
       print("YO T AS TROP D ITEM LA ")
     buildManip.calculTotalStats(self.build)
-    pprint.pprint(self.IU.build)
+    pprint.pprint(self.build)
 
   """CONNEXION SIGNALES"""
   def connectButton(self, button, itemId, function ):
@@ -76,13 +76,10 @@ class TCToolControl: #Theory Crafting Tool Control
 if __name__ == "__main__":
   app = QApplication(sys.argv)
   
-  IU = interface.IU()  #Interface Utilisateur
-  IU.show()
+  TCToolControl()
+  TCToolControl.show()
   
-  IU.levelSelector.currentIndex()
-  IU.levelSelector.currentText()
   
-  TCToolControl(IU=IU)
   
   sys.exit(app.exec_())
 
