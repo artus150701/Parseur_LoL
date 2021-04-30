@@ -16,8 +16,7 @@ def getChamp(pathDragon, build, dictChamp):
   with open(pathChamp, "r") as champFile:
     champData = champFile.read()
     dragon = json.loads(champData)
-    dataChamps = dragon.get("data")
-    dictChamp = dataChamps.get(champTarget)
+    dictChamp = (dragon.get("data")).get(champTarget)
     build = {"champion": { champTarget : { "name" : dictChamp.get("name"), "stats" : dictChamp.get("stats"), "level": lvlChamp, "items": {},"statsTotal": {"HP": 0,"Mana": 0,"Vitesse de deplacement": 0,"Armure": 0,"Resistance magique": 0,"Range": 0,"Regen de vie": 0,"Regen de mana": 0,"Crit chance": 0, "AD": 0,"AS": { "Ratio": 0, "Bonus": 0,  "Total": 0},"AP": 0,"LifeSteal": 0}}}}
     print(dictChamp)
     print(build)
@@ -29,5 +28,5 @@ if(pathDragon == ""):
 
 build = {}
 dictChamp = {}
-getChamp("dragontail-11.6.1", build, dictChamp)
+getChamp("dragontail-11.9.1", build, dictChamp)
 

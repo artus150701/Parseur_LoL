@@ -1,4 +1,4 @@
-from .getDragon import getOneItemData
+from .getDragon import getOneItemData,getOneChampData
 from .subModule.utileProg import doubleIterate, removesuffix
 from .subModule.tradStats import tradStatChamp, tradStatItem
 
@@ -61,7 +61,12 @@ def removeChampion(build):
       del build["champion"][key]
 
 def addChampion(build, champion):
-  pass
+  data = getOneChampData()
+  if data:
+    build["champion"] = data
+  else:
+    return False
+  return True
 
 def setLevelChampion(build, level):
   build["champion"]["level"] = level
