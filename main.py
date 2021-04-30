@@ -28,39 +28,6 @@ class TCTool(interface.IU): #Theory Crafting Tool Control
     
     # Connect signals and slots
     self.connectSignals()
-  
-
-
-  """<----------- CLICKED ----------->"""
-  def itemDeleteClicked(self, itemId):
-    buildManip.removeItem(self.build, itemId)
-    #Update
-    self.updateItemDeleteMenu()
-    buildManip.calculTotalStats(self.build)
-    
-  
-  def champClicked(self, champId):
-    buildManip.removeChampion(self.build)
-    buildManip.addChampion(self.build, champId)
-    #Update
-    self.updateChampBuildIcon()
-    buildManip.calculTotalStats(self.build)
-
-  
-  def itemClicked(self, itemId):
-    if not(buildManip.addItem(self.build, itemId)):
-      print("YO T AS TROP D ITEM LA ")
-    #Update
-    self.updateItemDeleteMenu()
-    buildManip.calculTotalStats(self.build)
-
-
-  def levelClicked(self):
-    buildManip.setLevelChampion(self.build, int(self.levelSelector.currentText()))
-    buildManip.calculTotalStats(self.build)
-    pprint.pprint(self.build)
-
-
 
 
   """<----------- CONNEXION SIGNALES ----------->"""
@@ -93,6 +60,38 @@ class TCTool(interface.IU): #Theory Crafting Tool Control
     
   def connectButton(self, button, buttonId, function ):
     button.clicked.connect(functools.partial(function, buttonId))
+
+
+  """<----------- CLICKED ----------->"""
+  def itemDeleteClicked(self, itemId):
+    buildManip.removeItem(self.build, itemId)
+    #Update
+    self.updateItemDeleteMenu()
+    buildManip.calculTotalStats(self.build)
+    
+  
+  def champClicked(self, champId):
+    buildManip.removeChampion(self.build)
+    buildManip.addChampion(self.build, champId)
+    #Update
+    self.updateChampBuildIcon()
+    buildManip.calculTotalStats(self.build)
+
+  
+  def itemClicked(self, itemId):
+    if not(buildManip.addItem(self.build, itemId)):
+      print("YO T AS TROP D ITEM LA ")
+    #Update
+    self.updateItemDeleteMenu()
+    buildManip.calculTotalStats(self.build)
+
+
+  def levelClicked(self):
+    buildManip.setLevelChampion(self.build, int(self.levelSelector.currentText()))
+    buildManip.calculTotalStats(self.build)
+    pprint.pprint(self.build)
+
+
 
 
 

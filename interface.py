@@ -1,12 +1,10 @@
 #PyQt import
-from pprint import pprint
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QComboBox, QLabel, QMainWindow, QPushButton, QHBoxLayout, QWidget, QGroupBox, QGridLayout, QScrollArea
 from PyQt5 import QtGui
 from PyQt5 import QtCore
 import sys 
 
-import Calcul.dragonManip as dragon
 import Calcul.buildManip as build
 import Calcul.getDragon as getDragon
 
@@ -212,8 +210,7 @@ class IU(QMainWindow):
   def updateItemDeleteMenuInterface(self):
     self.generalLayout.itemAtPosition(1,2).widget().deleteLater()
     self.generalLayout.addWidget(self.itemDeleteMenu(),1,2)
-    
-    
+
 
 
 
