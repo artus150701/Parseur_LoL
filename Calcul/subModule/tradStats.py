@@ -4,6 +4,8 @@
 def tradStatItem(nom):
   if(nom == 'HPPool'):
     return 'HP'
+  if(nom == 'HPRegen'):
+    return 'Regen de vie'
   if(nom == 'MPPool'):
     return 'Mana'
   if(nom == 'MovementSpeed'):
