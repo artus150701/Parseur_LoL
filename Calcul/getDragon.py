@@ -65,9 +65,9 @@ def getOneItemData(itemId):
   
 def getOneChampData(champName):
   dataChamp = getChampionData()
-  dictChamp = (dataChamp.get("data")).get(champName)
- return dataChamp = {dictChamp.get("id") : {"name": dictChamp.get(champName), "stats": dictChamp.get("stats")}}
-  
+  dictChamp = (dataChamp.get("data")).get(champName) 
+  dataChamp = {dictChamp.get("id") : {"name": dictChamp.get(champName), "stats": dictChamp.get("stats")}}
+  return dataChamp
 
 
 def getLisItemId():
