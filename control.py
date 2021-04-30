@@ -29,6 +29,39 @@ class TCToolControl(interface.IU): #Theory Crafting Tool Control
     # Connect signals and slots
     self.connectSignals()
   
+
+
+  """<----------- CLICKED ----------->"""
+  def itemDeleteClicked(self, itemId):
+    buildManip.removeItem(self.build, itemId)
+    
+    self.updateItemDeleteMenu()
+    buildManip.calculTotalStats(self.build)
+    
+  
+  def champClicked(self, champId):
+    buildManip.removeChampion(self.build)
+    buildManip.addChampion(self.build, champId)
+    
+    #Update
+    self.updateChampBuildIcon()
+    buildManip.calculTotalStats(self.build)
+
+  
+  def itemClicked(self, itemId):
+    if not(buildManip.addItem(self.build, itemId)):
+      print("YO T AS TROP D ITEM LA ")
+    
+    self.updateItemDeleteMenu()
+    buildManip.calculTotalStats(self.build)
+
+
+  def levelClicked(self):
+    buildManip.setLevelChampion(self.build, int(self.levelSelector.currentText()))
+    buildManip.calculTotalStats(self.build)
+    pprint.pprint(self.build)
+
+  """<----------- CONNEXION SIGNALES ----------->"""
   def connectSignals(self):
     #Connect Main Menu
     
@@ -36,37 +69,28 @@ class TCToolControl(interface.IU): #Theory Crafting Tool Control
     
     #Connect ChampSelectMenu
     for champButton in self.champButtonList:
-      self.connectButton(button=champButton[0], itemId=champButton[1], function=self.champClicked)
+      self.connectButton(button=champButton[0], buttonId=champButton[1], function=self.champClicked)
     
     #Connect itemSelectMenu
     for itemButton in self.itemButtonList:
-      self.connectButton(button=itemButton[0], itemId=itemButton[1], function=self.itemClicked)
+      self.connectButton(button=itemButton[0], buttonId=itemButton[1], function=self.itemClicked)
     
     #Connect itemDeleteButton
     for itemDeleteButton in self.itemDeleteButtonList:
-      self.connectButton(button=itemDeleteButton[0], itemId=itemDeleteButton[1], function=self.itemDeleteClicked)
+      self.connectButton(button=itemDeleteButton[0], buttonId=itemDeleteButton[1], function=self.itemDeleteClicked)
     
     #Connect champLevelMenu
-    
-
-
-  def itemDeleteClicked():
-    pass
+    self.levelSelector.currentIndexChanged.connect(functools.partial(self.levelClicked))
   
-  def champClicked(self, champId):
-    buildManip.addChampion(self.build, champId)
-    buildManip.calculTotalStats(self.build)
-    
   
-  def itemClicked(self, itemId):
-    if not(buildManip.addItem(self.build, itemId)):
-      print("YO T AS TROP D ITEM LA ")
-    buildManip.calculTotalStats(self.build)
-    pprint.pprint(self.build)
-
-  """CONNEXION SIGNALES"""
-  def connectButton(self, button, itemId, function ):
-    button.clicked.connect(functools.partial(function, itemId))
+  #============ CONNEXION SECONDAIRE =================
+  def updateItemDeleteMenu(self):
+    self.updateItemDeleteMenuInterface()
+    for itemDeleteButton in self.itemDeleteButtonList:
+      self.connectButton(button=itemDeleteButton[0], buttonId=itemDeleteButton[1], function=self.itemDeleteClicked)
+    
+  def connectButton(self, button, buttonId, function ):
+    button.clicked.connect(functools.partial(function, buttonId))
 
 
 
@@ -76,11 +100,8 @@ class TCToolControl(interface.IU): #Theory Crafting Tool Control
 if __name__ == "__main__":
   app = QApplication(sys.argv)
   
-  TCToolControl()
-  TCToolControl.show()
-  
-  
-  
+  TCTool = TCToolControl()
+  TCTool.show()
   sys.exit(app.exec_())
 
 

@@ -23,68 +23,6 @@ class IU(QMainWindow):
     self.height = 900
     self.build = build.createBuild()
 
-    #TEMPORAIRE CEST DE LA TRICHE OULALALALLAL
-    self.build = {
-      "champion": {
-          "Aatrox": {
-              "name": "Aatrox",
-              "stats": {
-                      "hp": 580,
-                      "hpperlevel": 90,
-                      "mp": 0,
-                      "mpperlevel": 0,
-                      "movespeed": 345,
-                      "armor": 38,
-                      "armorperlevel": 3.25,
-                      "spellblock": 32,
-                      "spellblockperlevel": 1.25,
-                      "attackrange": 175,
-                      "hpregen": 3,
-                      "hpregenperlevel": 1,
-                      "mpregen": 0,
-                      "mpregenperlevel": 0,
-                      "crit": 0,
-                      "critperlevel": 0,
-                      "attackdamage": 60,
-                      "attackdamageperlevel": 5,
-                      "attackspeedperlevel": 2.5,
-                      "attackspeed": 0.651
-              },
-          },
-          "level": 18,
-      },
-      "items": {},
-
-      "statsTotal": {
-          "HP": 0,
-          "Mana": 0,
-          "Vitesse de deplacement": 0,
-          "Armure": 0,
-          "Resistance magique": 0,
-          "Range": 0,
-          "Regen de vie": 0,
-          "Regen de mana": 0,
-          "Crit chance": 0,
-          "AD": 0,
-          "AS": {
-              "Ratio": 0,
-              "Bonus": 0,
-              "Total": 0
-          },
-          "AP": 0,
-          "LifeSteal": 0
-      },
-  }
-    build.addItem(self.build, "1037")
-    build.addItem(self.build, "1001")
-    build.addItem(self.build, "6333")
-    build.addItem(self.build, "1058")
-    build.addItem(self.build, "3004")
-    build.addItem(self.build, "3036")
-    pprint(self.build)
-    #FIN DE LA TRICHE OULOULUOULUOULUO
-    
-
     #Paramètres
     self.setWindowIcon(QtGui.QIcon("iconTCTool.png"))
     self.setWindowTitle(self.title)
@@ -105,6 +43,7 @@ class IU(QMainWindow):
   
 
 #============================FONCTION CREATION BIG WIDGET=========================================
+  
   def mainMenu(self):
     """Creation de la barre des tâches"""
     self.statusBar()
@@ -248,7 +187,7 @@ class IU(QMainWindow):
     
     return champLevelBox
 
-#=====================FONCTION AUXILIERE ============================================
+#=====================FONCTION AUXILIERE ============================================"""
   def setChampButton(self, champButton, champId):
     iconChampPath = getDragon.getIconChampPath(champId)
     champButton.setIcon(QtGui.QIcon(iconChampPath))
@@ -261,13 +200,21 @@ class IU(QMainWindow):
     itemButton.setFixedSize(75,75)
     itemButton.setIconSize(QtCore.QSize(100,100))
 
+
+  #Fonction d'update
   def updateChampBuildIcon(self):
     champId = build.getChampName(self.build)
     if champId != "":
       iconChampPath = getDragon.getIconChampPath(champId)
       pixmap = QtGui.QPixmap(iconChampPath).scaled(200,200)
       self.champBuildIcon.setPixmap(pixmap)
-      
+  
+  def updateItemDeleteMenuInterface(self):
+    self.generalLayout.itemAtPosition(1,2).widget().deleteLater()
+    self.generalLayout.addWidget(self.itemDeleteMenu(),1,2)
+    
+    
+
 
 
 if __name__ == "__main__":

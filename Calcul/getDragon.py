@@ -1,6 +1,6 @@
 import json
 import os
-from . import dragonManip,buildManip
+from . import dragonManip
 
 """ 
 attention ces items ne sont pas sensé être dans un build et sont pourtant dans item.json
@@ -63,12 +63,13 @@ def getOneItemData(itemId):
   return False
   """
   
+  
 def getOneChampData(champName):
   dataChamp = getChampionData()
   dictChamp = (dataChamp.get("data")).get(champName)
- return dataChamp = {dictChamp.get("id") : {"name": dictChamp.get(champName), "stats": dictChamp.get("stats")}}
+  return {dictChamp.get("id") : {"name": dictChamp.get("name"), "stats": dictChamp.get("stats")}}
   
-
+  
 
 def getLisItemId():
   itemsData = getItemsData()
