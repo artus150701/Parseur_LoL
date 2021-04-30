@@ -1,6 +1,6 @@
 import json
 import os
-from . import dragonManip
+from . import dragonManip,buildManip
 
 """ 
 attention ces items ne sont pas sensé être dans un build et sont pourtant dans item.json
@@ -47,7 +47,6 @@ def getChampionData():
   pathChampion = os.path.join(dragonPath, dragonName[11:], "data", "fr_FR", "champion.json")
   with open(pathChampion, "r") as championFile:
     championJson = championFile.read()
-  
   return json.loads(championJson)
 
 # ============= recuperation precise de donnee depuis les dicos de json
@@ -64,8 +63,11 @@ def getOneItemData(itemId):
   return False
   """
   
-def getOneChampData():
-  pass
+def getOneChampData(champName):
+  dataChamp = getChampionData()
+  dictChamp = (dataChamp.get("data")).get(champName)
+ return dataChamp = {dictChamp.get("id") : {"name": dictChamp.get(champName), "stats": dictChamp.get("stats")}}
+  
 
 
 def getLisItemId():
