@@ -15,6 +15,7 @@ attention ces items ne sont pas sensé être dans un build et sont pourtant dans
 """
 
 # ============== Parse les fichiers json en dico  ==========
+
 def getItemsData():
   dragonPath = dragonManip.getDragonPath()
   dragonName = dragonManip.getDragonName()
@@ -49,9 +50,10 @@ def getChampionData():
     championJson = championFile.read()
   return json.loads(championJson)
 
-# ============= recuperation precise de donnee depuis les dicos de json
+# ==== recuperation precise de donnee depuis les dicos de json ====
 
-#Cette fonction marche qu'avec le nom de l'item en argument
+#Cette fonction marche qu'avec le nom de l'item en argument 
+# et permet de récuperer les données de l'item
 def getOneItemData(itemId):
   dataItems = getItemsData()
   return dataItems["data"][itemId]
@@ -62,7 +64,8 @@ def getOneItemData(itemId):
 
   return False
   """
-  
+
+#Cette fonction permet de recuperer les données d'un champion en retrant son nom
 def getOneChampData(champName):
   dataChamp = getChampionData()
   dictChamp = (dataChamp.get("data")).get(champName) 
@@ -86,10 +89,12 @@ def getListChampionId():
     listChampionId.append(id)
   return listChampionId
 
+#permet de recuperer le chemin vers l'icon d'un champion en rentrant son id
 def getIconChampPath(champId):
   dragonPath = dragonManip.getDragonPath()
   return os.path.join(dragonPath,"img","champion","tiles",champId + "_0.jpg")
 
+#permet de recuperer le chemin vers l'icon d'un item en rentrant son id
 def getIconItemPath(idItem):
   dragonPath = dragonManip.getDragonPath()
   dragonName = dragonManip.getDragonName()

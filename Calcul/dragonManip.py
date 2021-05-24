@@ -10,13 +10,17 @@ import tarfile
 
 
 #==============================FONCTIONS==============================
+
 #--------RECUPERATION D'INFORMATION-------
+
+#recuperation du nom du dragon
 def getDragonName():
   for x in os.listdir(os.getcwd()):
     if("dragontail" == x[0:10]):
         return x
   return ""
 
+#recuperation du chemin vers le dataDragon
 def getDragonPath():
   return os.path.join(os.getcwd(), getDragonName())
 
@@ -28,6 +32,7 @@ def getLastPatchDragonName():
 
   return newestDragonEUW
 
+#verifie si il y a un mise a jour disponible
 def checkForUpdate():
   localDragon = getDragonName()
   newestDragonEUW = getLastPatchDragonName()
@@ -39,6 +44,7 @@ def checkForUpdate():
 
 #--------MODIFICATION DU DATA DRAGON-----------------
 
+#supression du dataDragon
 def removeDragon():
   shutil.rmtree(getDragonPath())
 

@@ -54,23 +54,23 @@ class Window(QMainWindow):
       "items": {},
 
       "statsTotal": {
-          "HP": 0,
-          "Mana": 0,
-          "Vitesse de deplacement": 0,
-          "Armure": 0,
-          "Resistance magique": 0,
-          "Range": 0,
-          "Regen de vie": 0,
-          "Regen de mana": 0,
-          "Crit chance": 0,
-          "AD": 0,
+          "HP": 1,
+          "Mana": 2,
+          "Vitesse de deplacement": 3,
+          "Armure": 4,
+          "Resistance magique": 5,
+          "Range": 6,
+          "Regen de vie": 7,
+          "Regen de mana": 8,
+          "Crit chance": 9,
+          "AD": 10,
           "AS": {
               "Ratio": 0,
               "Bonus": 0,
-              "Total": 0
+              "Total": 20
           },
-          "AP": 0,
-          "LifeSteal": 0
+          "AP": 21,
+          "LifeSteal": 22
       },
   }
     build.setLevelChampion(self.build, 18)
@@ -159,12 +159,19 @@ class Window(QMainWindow):
           break
 
     #définition de la grille des stats
-    statLabel =  QLabel("bonsoir")
-    for i in range (1,13,1):
+    listStat = ["HP","Mana","Vitesse de deplacement","Armure","Resistance magique" ,"Range","Regen de vie","Regen de mana","Crit chance","AD","AS","AP","LifeSteal"]
+    for i in range (1,14,1):
       pixmap = QtGui.QPixmap("icon"+ str(i) +".png")
-      statLabel.setPixmap(pixmap)
-      gridStat.addWidget(statLabel, i, 0)
-
+      statIconLabel = QLabel()
+      statIconLabel.setPixmap(pixmap)
+      gridStat.addWidget(statIconLabel, i, 0)
+      statValeurLabel = QLabel()
+      if(i == 11):
+        statValeurLabel.setText(listStat[i-1]+ ": " +str(self.build["statsTotal"][listStat[i-1]]["Total"]))
+      else:
+        statValeurLabel.setText(listStat[i-1] + ": " + str(self.build["statsTotal"][listStat[i-1]]))
+      gridStat.addWidget(statValeurLabel, i, 1)
+    
     championBox.setLayout(gridChampion)
     championScroll = QScrollArea()
     championScroll.setWidget(championBox)
