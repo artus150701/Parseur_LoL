@@ -99,6 +99,7 @@ class TCTool(interface.IU): #Theory Crafting Tool Control
 
 
 if __name__ == "__main__":
+  dragonManip.dragonUpdate();
   app = QApplication(sys.argv)
   
   TCTool = TCTool()
