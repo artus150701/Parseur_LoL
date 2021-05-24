@@ -1,19 +1,14 @@
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QHBoxLayout, QWidget, QGroupBox, QGridLayout, QScrollArea
-from PyQt5 import QtGui
-from PyQt5.QtCore import QRect
-from PyQt5 import QtCore
-import sys 
+#PyQt import
+from PyQt5.QtWidgets import QApplication
 
+#TCTool packets import
 import interface
-
 import Calcul.dragonManip as dragonManip
 import Calcul.buildManip as buildManip
-import Calcul.getDragon as getDragon
 
-
-
+#autre import
+import sys 
 import functools
-import pprint
 
 #Ce module fait le lien entre l'interface et le module de calcule
 #Aucune fonction ne doit retourné quoi que ce soit ici
@@ -68,6 +63,7 @@ class TCTool(interface.IU): #Theory Crafting Tool Control
     #Update
     self.updateItemDeleteMenu()
     buildManip.calculTotalStats(self.build)
+    self.updateStatPanel()
     
   
   def champClicked(self, champId):
@@ -76,30 +72,28 @@ class TCTool(interface.IU): #Theory Crafting Tool Control
     #Update
     self.updateChampBuildIcon()
     buildManip.calculTotalStats(self.build)
+    self.updateStatPanel()
 
   
   def itemClicked(self, itemId):
-    if not(buildManip.addItem(self.build, itemId)):
-      print("YO T AS TROP D ITEM LA ")
+    buildManip.addItem(self.build, itemId)
     #Update
     self.updateItemDeleteMenu()
     buildManip.calculTotalStats(self.build)
+    self.updateStatPanel()
 
 
   def levelClicked(self):
     buildManip.setLevelChampion(self.build, int(self.levelSelector.currentText()))
     buildManip.calculTotalStats(self.build)
-    pprint.pprint(self.build)
-
-
-
+    self.updateStatPanel()
 
 
 
 
 
 if __name__ == "__main__":
-  dragonManip.dragonUpdate();
+  dragonManip.dragonUpdate()
   app = QApplication(sys.argv)
   
   TCTool = TCTool()

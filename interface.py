@@ -3,11 +3,18 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QComboBox, QLabel, QMainWindow, QPushButton, QHBoxLayout, QWidget, QGroupBox, QGridLayout, QScrollArea
 from PyQt5 import QtGui
 from PyQt5 import QtCore
-import sys 
 
+#Module Calcul import
 import Calcul.buildManip as build
 import Calcul.getDragon as getDragon
 
+#autre import
+import sys 
+
+
+#ON ne met que les modules consernant PyQT 
+#Servant à afficher des choses UNIQUEMENT 
+#Aucune fonction ne doit avoir besoin du packet "Calcul"
 
 class IU(QMainWindow):
   """Interface du TheoryCrafting Tool"""
@@ -22,7 +29,7 @@ class IU(QMainWindow):
     self.build = build.createBuild()
 
     #Paramètres
-    self.setWindowIcon(QtGui.QIcon("iconTCTool.png"))
+    self.setWindowIcon(QtGui.QIcon("./img/iconTCTool.png"))
     self.setWindowTitle(self.title)
     self.setFixedSize(self.width, self.height)
     #Met en place le principale widget et le layout générale
@@ -35,12 +42,11 @@ class IU(QMainWindow):
     self.generalLayout.addWidget(self.itemSelectMenu(), 2, 2)
     self.generalLayout.addWidget(self.itemDeleteMenu(), 1, 2)
     self.generalLayout.addWidget(self.champLevelMenu(), 1, 1)
+    self.generalLayout.addWidget(self.statPanel(), 1, 3, 2, 1)
 
     self.mainWidget.setLayout(self.generalLayout)
-    #self.show()
-  
 
-#============================FONCTION CREATION BIG WIDGET=========================================
+#==================FONCTION CREATION ELEMENTS INTERFACE===========================
   
   def mainMenu(self):
     """Creation de la barre des tâches"""
@@ -185,7 +191,31 @@ class IU(QMainWindow):
     
     return champLevelBox
 
-#=====================FONCTION AUXILIERE ============================================"""
+  def statPanel(self):
+    """ Creation du panneaux des statistiques"""
+    gridStat = QGridLayout()
+    gridStat.setSpacing(1)
+    
+    #Creation du contenu
+    listStat = ["HP","Mana","Vitesse de deplacement","Armure","Resistance magique" ,"Range","Regen de vie","Regen de mana","Crit chance","AD","AS","AP","LifeSteal"]
+    for i in range (1,14,1):
+      pixmap = QtGui.QPixmap("./img/icon"+ str(i) +".png")
+      statIconLabel = QLabel()
+      statIconLabel.setPixmap(pixmap)
+      gridStat.addWidget(statIconLabel, i, 0)
+      statValeurLabel = QLabel()
+      if(i == 11):
+        statValeurLabel.setText(listStat[i-1]+ ": " +str(round(self.build["statsTotal"][listStat[i-1]]["Total"])))
+      else:
+        statValeurLabel.setText(listStat[i-1] + ": " + str(round(self.build["statsTotal"][listStat[i-1]])))
+      gridStat.addWidget(statValeurLabel, i, 1)
+    
+    #Emboitage du panneau
+    statBox = QGroupBox("Statistiques")
+    statBox.setLayout(gridStat)
+    return statBox
+      
+#=====================FONCTION INTERNE ============================================
   def setChampButton(self, champButton, champId):
     iconChampPath = getDragon.getIconChampPath(champId)
     champButton.setIcon(QtGui.QIcon(iconChampPath))
@@ -198,8 +228,7 @@ class IU(QMainWindow):
     itemButton.setFixedSize(75,75)
     itemButton.setIconSize(QtCore.QSize(100,100))
 
-
-  #Fonction d'update
+  #----Fonction d'update----
   def updateChampBuildIcon(self):
     champId = build.getChampName(self.build)
     if champId != "":
@@ -211,7 +240,9 @@ class IU(QMainWindow):
     self.generalLayout.itemAtPosition(1,2).widget().deleteLater()
     self.generalLayout.addWidget(self.itemDeleteMenu(),1,2)
 
-
+  def updateStatPanel(self):
+    self.generalLayout.itemAtPosition(1,3).widget().deleteLater()
+    self.generalLayout.addWidget(self.statPanel(), 1, 3, 2, 1)
 
 
 if __name__ == "__main__":

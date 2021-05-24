@@ -159,12 +159,19 @@ class Window(QMainWindow):
           break
 
     #définition de la grille des stats
-    statLabel =  QLabel("bonsoir")
-    for i in range (1,13,1):
-      pixmap = QtGui.QPixmap("icon"+ str(i) +".png")
-      statLabel.setPixmap(pixmap)
-      gridStat.addWidget(statLabel, i, 0)
-
+    listStat = ["HP","Mana","Vitesse de deplacement","Armure","Resistance magique" ,"Range","Regen de vie","Regen de mana","Crit chance","AD","AS","AP","LifeSteal"]
+    for i in range (1,14,1):
+      pixmap = QtGui.QPixmap("./img/icon"+ str(i) +".png")
+      statIconLabel = QLabel()
+      statIconLabel.setPixmap(pixmap)
+      gridStat.addWidget(statIconLabel, i, 0)
+      statValeurLabel = QLabel()
+      if(i == 11):
+        statValeurLabel.setText(listStat[i-1]+ ": " +str(self.build["statsTotal"][listStat[i-1]]["Total"]))
+      else:
+        statValeurLabel.setText(listStat[i-1] + ": " + str(self.build["statsTotal"][listStat[i-1]]))
+      gridStat.addWidget(statValeurLabel, i, 1)
+      
     championBox.setLayout(gridChampion)
     championScroll = QScrollArea()
     championScroll.setWidget(championBox)
