@@ -103,7 +103,7 @@ class Window(QMainWindow):
     championBox = QGroupBox("Champions")
     itemsBox = QGroupBox("items")
     statBox = QGroupBox("Statistiques")
-    
+
     # ================================PARSEUR BOUTON A METTRE ICI=================================================
 
     championIdList = getDragon.getListChampionId()
@@ -157,11 +157,13 @@ class Window(QMainWindow):
         compteur += 1
         if compteur == len(itemButtonList): #On s'arrête une fois la liste de bouton complètement parcouru
           break
-    
+
     #définition de la grille des stats
-    statLabel =  QLabel("ici on mettra les stas\n avec les icons tout ça tout ça")
-    gridStat.addWidget(statLabel)
-    
+    statLabel =  QLabel("bonsoir")
+    for i in range (1,13,1):
+      pixmap = QtGui.QPixmap("icon"+ str(i) +".png")
+      statLabel.setPixmap(pixmap)
+      gridStat.addWidget(statLabel, i, 0)
 
     championBox.setLayout(gridChampion)
     championScroll = QScrollArea()
@@ -177,10 +179,11 @@ class Window(QMainWindow):
 
     statBox.setLayout(gridStat)
 
-
     finalLayout = QGridLayout()
+
     finalLayout.addWidget(championScroll, 2, 1)
     finalLayout.addWidget(itemScroll, 2, 2)
+
     finalLayout.addWidget(statBox, 2, 3 )
 
 
