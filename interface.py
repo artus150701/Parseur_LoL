@@ -205,7 +205,9 @@ class IU(QMainWindow):
       gridStat.addWidget(statIconLabel, i, 0)
       statValeurLabel = QLabel()
       if(i == 11):
-        statValeurLabel.setText(listStat[i-1]+ ": " +str(round(self.build["statsTotal"][listStat[i-1]]["Total"])))
+        statValeurLabel.setText(listStat[i-1]+ ": " +str(round(self.build["statsTotal"][listStat[i-1]]["Total"],3)))
+      elif i == 9 or i == 13:
+        statValeurLabel.setText(listStat[i-1]+ ": " +str(round(self.build["statsTotal"][listStat[i-1]] * 100)) + "%")
       else:
         statValeurLabel.setText(listStat[i-1] + ": " + str(round(self.build["statsTotal"][listStat[i-1]])))
       gridStat.addWidget(statValeurLabel, i, 1)

@@ -3,6 +3,7 @@ from .subModule.utileProg import doubleIterate, removesuffix
 from .subModule.tradStats import tradStatChamp, tradStatItem
 
 
+
 def createBuild():
   build = {
       "champion": {
@@ -73,7 +74,7 @@ def addItem(build, item):
     data = getOneItemData(item)
     if data:
       build["items"][item] = data
-      return True, 0
+      return True
   else:
     #il y a déjà 6 items dans le build
     return False
@@ -118,7 +119,13 @@ def calculTotalStats(build):
   itemSet = build["items"]
   statsTotal = build["statsTotal"]
   statsChamp = build["champion"][champDataKey]["stats"]
-
+  
+  #On remise à 0 des statistique "non naturels"
+  statsTotal["AS"]["Bonus"] = 0
+  statsTotal["AP"]= 0
+  statsTotal["LifeSteal"] = 0
+  statsTotal["Crit chance"] = 0
+  
   #Calcules stats + lvl
   for stat, next_stat in doubleIterate(statsChamp.items()):
 
@@ -131,28 +138,26 @@ def calculTotalStats(build):
         statsTotal[tradStatChamp(stat[0])] = stat[1]
 
       elif stat[0] == "attackspeedperlevel":
-        asBonusPourcent = stat[1] * (champLevel - 1) * \
-            (0.7025 + 0.0175 * (champLevel - 1))
+        asBonusPourcent = stat[1] * (champLevel - 1) * (0.7025 + 0.0175 * (champLevel - 1))
         statsTotal[tradStatChamp(next_stat[0])]["Bonus"] += asBonusPourcent/100
         statsTotal[tradStatChamp(next_stat[0])]["Ratio"] = next_stat[1]
 
       else:
-        statsTotal[tradStatChamp(stat[0])] = statFormula(
-            stat[1], next_stat[1], champLevel)
+        statsTotal[tradStatChamp(stat[0])] = statFormula(stat[1], next_stat[1], champLevel)
 
   #Calcules stats + items
   for selectItem in itemSet:
     itemStats = itemSet[selectItem]["stats"]
     for selectStat in itemStats:
       if selectStat.startswith('Flat'):
-        statsTotal[tradStatItem(removesuffix(
-            selectStat.lstrip("Flat"), "Mod"))] += itemStats[selectStat]
+        statsTotal[tradStatItem(removesuffix(selectStat.lstrip("Flat"), "Mod"))] += itemStats[selectStat]
+      elif "LifeSteal" in selectStat:
+        statsTotal["LifeSteal"] += itemStats[selectStat]
       elif "AttackSpeed" in selectStat:
         statsTotal["AS"]["Bonus"] += itemStats[selectStat]
       else:
         statsTotal[tradStatItem(removesuffix(selectStat.lstrip(
             "Percent"), "Mod"))] *= 1 + itemStats[selectStat]
-
+        
   #Calcul de L'attaque speed total capé à 2.5
-  statsTotal["AS"]["Total"] = (
-      statsTotal["AS"]["Ratio"] * (1 + statsTotal["AS"]["Bonus"])) % 2.5
+  statsTotal["AS"]["Total"] = (statsTotal["AS"]["Ratio"] * (1 + statsTotal["AS"]["Bonus"])) % 2.5 
